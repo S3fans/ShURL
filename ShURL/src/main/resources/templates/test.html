@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <title>Сократитель ссылок</title>
+  <style>
+    body {
+      background: linear-gradient(to bottom, #4CAF50, #2E8B57);
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .container {
+	  border: 4px solid #5fde9a;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background-color: white;
+      padding: 20px;
+      border-radius: 10px;
+    }
+    input {
+      border: 2px solid #4CAF50;
+      border-radius: 5px;
+      padding: 8px;
+      margin-bottom: 10px;
+    }
+    button {
+      padding: 10px 20px;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      text-align: center;
+      font-size: 16px;
+      cursor: pointer;
+      margin-left: 5px;
+      background: #4CAF50;
+      background: -webkit-linear-gradient(to right, #4CAF50, #2E8B57); /* Chrome 10-25, Safari 5.1-6 */
+      background: linear-gradient(to right, #4CAF50, #2E8B57); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Введите URL, который вы хотите сократить:</h2>
+    <label for="urlInput"></label><input type="text" id="urlInput">
+    <button onclick="makeShorter()">Сократить</button>
+  </div>
+</body>
+</html>
