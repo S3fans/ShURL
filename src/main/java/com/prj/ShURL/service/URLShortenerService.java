@@ -6,8 +6,8 @@ import java.util.Map;
 import java.util.Random;
 
 @Service
-public class UrlShortenerService {
-    private static final Map<String, String> urlMap = new HashMap<>();
+public class URLShortenerService {
+    private final Map<String, String> urlMap = new HashMap<>();
 
     public String shortenUrl(String originalUrl) {
         String shortUrl = generateShortUrl();
@@ -15,7 +15,7 @@ public class UrlShortenerService {
         return shortUrl;
     }
 
-    public static String getOriginalUrl(String shortUrl) {
+    public String getOriginalUrl(String shortUrl) {
         String originalUrl = urlMap.get(shortUrl);
         if (originalUrl == null) {
             throw new RuntimeException("Short URL not found");
