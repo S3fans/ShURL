@@ -48,13 +48,13 @@
 <div class="container">
     <h2>Сокращение ссылок</h2>
     <form method="post" th:object="${url}">
-        <label for="url">Введите URL, который вы хотите сократить:</label>
+        <label for="url">Введите ссылку, которую вы хотите сократить:</label>
         <input type="text" id="url" name="url" placeholder="Ваша ссылка" th:field="*{url}">
-        <input th:type="submit" value="Submit">
+        <input th:type="submit" value="Сократить">
     </form>
 
     <div th:if="${shortUrl != ''}">
-        <p>Short URL: <a th:href="@{'http://localhost:8081/redirect/' + ${shortUrl}}">ссылка</a></p>
+        <p>Short URL: <a th:href="@{'http://localhost:8081/redirect/' + ${shortUrl}}">Сокращёная ссылка</a></p>
     </div>
 </div>
 </body>

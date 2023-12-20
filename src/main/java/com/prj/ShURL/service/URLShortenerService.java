@@ -20,6 +20,9 @@ public class URLShortenerService {
         if (originalUrl == null) {
             throw new RuntimeException("Short URL not found");
         }
+        if (!originalUrl.startsWith("https://") && !originalUrl.startsWith("http://")) {
+            throw new RuntimeException("Invalid URL");
+        }
         return originalUrl;
     }
 
