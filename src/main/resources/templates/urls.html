@@ -54,7 +54,10 @@
     </form>
 
     <div th:if="${shortUrl != ''}">
-        <p>Short URL: <a th:href="@{'http://localhost:8081/redirect/' + ${shortUrl}}">Сокращёная ссылка</a></p>
+        <p>Short URL: <a th:href="@{'http://localhost:8081/redirect/' + ${shortUrl}}" th:text="@{'http://localhost:8081/redirect/' + ${shortUrl}}"></a></p>
+    </div>
+    <div th:if="${error != ''}">
+        <span style="color: red;"><p th:text="${error}"></p></span>
     </div>
 </div>
 </body>

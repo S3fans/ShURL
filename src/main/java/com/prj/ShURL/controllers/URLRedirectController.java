@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/redirect")
@@ -15,12 +16,11 @@ public class URLRedirectController {
     private URLShortenerService service;
 
     @GetMapping("{shortUrl}")
-    public ResponseEntity<Void> redirect(@PathVariable String shortUrl) {
-        String originalUrl = service.getOriginalUrl(shortUrl);
-
-        return ResponseEntity
+    public ResponseEntity<?> redirect(@PathVariable String shortUrl) {
+        Optional<String> originalUrl = service.getOriginalUrl(shortUrl);
+        return originalUrl.map(url -> ResponseEntity
                 .status(HttpStatus.FOUND)
-                .location(URI.create(originalUrl))
-                .build();
+                .location(URI.create(url))
+                .build()).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 }

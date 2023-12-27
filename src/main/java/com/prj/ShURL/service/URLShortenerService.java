@@ -1,39 +1,62 @@
 package com.prj.ShURL.service;
+
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
-import java.util.regex.Matcher;
+import java.io.*;
+import java.util.*;
 import java.util.regex.Pattern;
 
 @Service
 public class URLShortenerService {
-    private final Map<String, String> urlMap = new HashMap<>();
+    private final Pattern urlPattern = Pattern.compile("^(http(s)?:\\/\\/)?(www\\.)?[a-zA-Z0-9-]+(\\.[a-zA-Z]{2,})+");
+    private final File storageFile = new File("storage.bin");
 
-    public String shortenUrl(String originalUrl) {
-        String urlRegex = "^(http(s)?:\\/\\/)?(www\\.)?[a-zA-Z0-9-]+(\\.[a-zA-Z]{2,})+";
-        Pattern pattern = Pattern.compile(urlRegex);
-        Matcher matcher = pattern.matcher(originalUrl);
-        String shortUrl = generateShortUrl();
-        urlMap.put(shortUrl, originalUrl);
-        return shortUrl;
+    private Map<String, String> urlMap = new HashMap<>();
+
+    @SuppressWarnings("unchecked")
+    public URLShortenerService() {
+        if (!storageFile.exists()) return;
+
+        // Считываем сохраненные url из файла
+        try (
+                var fileInput = new FileInputStream(storageFile);
+                var objectInput = new ObjectInputStream(fileInput)
+        ) {
+            urlMap = (Map<String, String>) objectInput.readObject();
+        } catch (Exception ignored) {}
     }
 
-    public String getOriginalUrl(String shortUrl) {
-        String originalUrl = urlMap.get(shortUrl);
-        if (originalUrl == null) {
-            throw new RuntimeException("Short URL not found");
+    private void save() {
+        // Сохраняем все url в файл
+        try (
+                var fileOutput = new FileOutputStream(storageFile);
+                var objectOutput = new ObjectOutputStream(fileOutput)
+        ) {
+            objectOutput.writeObject(urlMap);
+        } catch (Exception ignored) {}
+    }
+
+    public String shortenUrl(String originalUrl) {
+        if (urlPattern.matcher(originalUrl).find()) {
+            String shortUrl = generateShortUrl();
+            urlMap.put(shortUrl, originalUrl);
+
+            // Сохраняем все, что только можно
+            save();
+            return shortUrl;
         }
-        if (!originalUrl.startsWith("https://") && !originalUrl.startsWith("http://")) {
-            throw new RuntimeException("Invalid URL");
-        }
-        return originalUrl;
+
+        throw new IllegalArgumentException();
+    }
+
+    public Optional<String> getOriginalUrl(String shortUrl) {
+        return Optional.ofNullable(urlMap.get(shortUrl));
     }
 
     private String generateShortUrl() {
         String allowedChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
         int lengthOfUrl = 8;
+
         Random random = new Random();
         StringBuilder shortUrl = new StringBuilder();
 

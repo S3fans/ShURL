@@ -15,15 +15,21 @@ public class URLShortenController {
     private URLShortenerService service;
 
     @GetMapping
-    public String showUrlPage(Model model, @ModelAttribute("shortUrl") String shortUrl) {
+    public String showUrlPage(Model model, @ModelAttribute("shortUrl") String shortUrl, @ModelAttribute("error") String error) {
         model.addAttribute("url", new URL());
         model.addAttribute("shortUrl", shortUrl);
+        model.addAttribute("error", error);
         return "urls";
     }
 
     @PostMapping
     public String addUrl(URL url, RedirectAttributes attributes) {
-        attributes.addAttribute("shortUrl", service.shortenUrl(url.getUrl()));
+        try {
+            attributes.addAttribute("shortUrl", service.shortenUrl(url.getUrl()));
+        } catch (IllegalArgumentException e) {
+            attributes.addAttribute("error", "Это не ссылка!");
+        }
+
         return "redirect:/urls";
     }
 }
