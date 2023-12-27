@@ -25,7 +25,7 @@ public class URLShortenerService {
             urlMap = (Map<String, String>) objectInput.readObject();
         } catch (Exception ignored) {}
     }
-
+// var для определения классов
     private void save() {
         // Сохраняем все url в файл
         try (
@@ -52,7 +52,7 @@ public class URLShortenerService {
     public Optional<String> getOriginalUrl(String shortUrl) {
         return Optional.ofNullable(urlMap.get(shortUrl));
     }
-
+// самая сложная и безопасная функция геенерации рандомной сокращённой ссылки в мире ♥
     private String generateShortUrl() {
         String allowedChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
         int lengthOfUrl = 8;

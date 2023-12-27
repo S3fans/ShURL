@@ -7,13 +7,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
+// сокращалка туда суда
 @Controller
 @RequestMapping(value = "/urls")
 public class URLShortenController {
     @Autowired
     private URLShortenerService service;
-
+// новые ссылки №2
     @GetMapping
     public String showUrlPage(Model model, @ModelAttribute("shortUrl") String shortUrl, @ModelAttribute("error") String error) {
         model.addAttribute("url", new URL());
@@ -27,7 +27,7 @@ public class URLShortenController {
         try {
             attributes.addAttribute("shortUrl", service.shortenUrl(url.getUrl()));
         } catch (IllegalArgumentException e) {
-            attributes.addAttribute("error", "Это не ссылка!");
+            attributes.addAttribute("error", "Вы ввели не ссылку!");
         }
 
         return "redirect:/urls";

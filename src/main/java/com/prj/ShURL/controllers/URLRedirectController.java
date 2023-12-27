@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.util.Optional;
-
+// перенаправлялка туда суда
 @Controller
 @RequestMapping("/redirect")
 public class URLRedirectController {
@@ -17,6 +17,7 @@ public class URLRedirectController {
 
     @GetMapping("{shortUrl}")
     public ResponseEntity<?> redirect(@PathVariable String shortUrl) {
+        // либо "опционально" получаем ссылку либо шиш
         Optional<String> originalUrl = service.getOriginalUrl(shortUrl);
         return originalUrl.map(url -> ResponseEntity
                 .status(HttpStatus.FOUND)
