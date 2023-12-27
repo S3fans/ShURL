@@ -1,4 +1,3 @@
-/*
 package com.prj.ShURL.controllers;
 
 import org.springframework.http.HttpStatus;
@@ -16,4 +15,3 @@ public class URLErrorController {
         return new ResponseEntity<String>("", HttpStatus.FORBIDDEN);
     }
 }
-*/

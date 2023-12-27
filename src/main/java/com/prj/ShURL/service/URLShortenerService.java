@@ -12,10 +12,9 @@ public class URLShortenerService {
     private final Map<String, String> urlMap = new HashMap<>();
 
     public String shortenUrl(String originalUrl) {
-        /*String urlRegex = "^(http(s)?:\\/\\/)?(www\\.)?[a-zA-Z0-9-]+(\\.[a-zA-Z]{2,})+";
+        String urlRegex = "^(http(s)?:\\/\\/)?(www\\.)?[a-zA-Z0-9-]+(\\.[a-zA-Z]{2,})+";
         Pattern pattern = Pattern.compile(urlRegex);
         Matcher matcher = pattern.matcher(originalUrl);
-        */
         String shortUrl = generateShortUrl();
         urlMap.put(shortUrl, originalUrl);
         return shortUrl;
