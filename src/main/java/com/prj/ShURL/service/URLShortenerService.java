@@ -4,12 +4,18 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Service
 public class URLShortenerService {
     private final Map<String, String> urlMap = new HashMap<>();
 
     public String shortenUrl(String originalUrl) {
+        /*String urlRegex = "^(http(s)?:\\/\\/)?(www\\.)?[a-zA-Z0-9-]+(\\.[a-zA-Z]{2,})+";
+        Pattern pattern = Pattern.compile(urlRegex);
+        Matcher matcher = pattern.matcher(originalUrl);
+        */
         String shortUrl = generateShortUrl();
         urlMap.put(shortUrl, originalUrl);
         return shortUrl;
